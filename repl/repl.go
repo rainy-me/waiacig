@@ -15,8 +15,7 @@ func StartREPL(in io.Reader, out io.Writer) {
 	scanner := bufio.NewScanner(in)
 	for {
 		fmt.Printf(PROMPT)
-		scanned := scanner.Scan()
-		if !scanned {
+		if !scanner.Scan() {
 			return
 		}
 		line := scanner.Text()
