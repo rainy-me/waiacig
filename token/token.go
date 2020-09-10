@@ -23,8 +23,8 @@ https://github.com/golang/lint/issues/186
 */
 const (
 	/*
-		use string for now for simplicy,
-		may change to number btyes fpr performance
+		use string for now for simplicity,
+		may change to number bytes for performance
 	*/
 	// special
 	ILLEGAL = "ILLEGAL"
