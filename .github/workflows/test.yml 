@@ -1,9 +1,9 @@
-name: Test All
+name: Test
 
 on: [push]
 
 jobs:
-  test-all:
+  test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
