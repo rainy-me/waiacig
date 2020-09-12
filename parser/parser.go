@@ -55,11 +55,22 @@ func NewParser(l *lexer.Lexer) *Parser {
 	p.registerInfixFn(token.GT, p.parseInfixExpression)
 	p.registerPrefixFn(token.TRUE, p.parseBoolean)
 	p.registerPrefixFn(token.FALSE, p.parseBoolean)
+	p.registerPrefixFn(token.LPAREN, p.parseGroupedExpression)
 	// to set curToken and peekToken
 
 	p.nextToken()
 	p.nextToken()
 	return p
+}
+
+func (p *Parser) parseGroupedExpression() ast.Expression {
+	defer untrace(trace("parseGroupedExpression"))
+	p.nextToken()
+	exp := p.parseExpression(LOWEST)
+	if !p.expectPeek(token.RPAREN) {
+		return nil
+	}
+	return exp
 }
 
 func (p *Parser) parsePrefixExpression() ast.Expression {
