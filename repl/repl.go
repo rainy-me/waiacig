@@ -10,11 +10,26 @@ import (
 	"waiig/parser"
 )
 
+const MONKEY_FACE = `
+            __,__
+   .--.  .-"     "-.  .--.
+  / .. \/  .-. .-.  \/ .. \
+ | |  '|  /   Y   \  |'  | |
+ | \   \  \ 0 | 0 /  /   / |
+  \ '- ,\.-"""""""-./, -' /
+   ''-' /_   ^ ^   _\ '-''
+       |  \._   _./  |
+       \   \ '~' /   /
+        '._ '-=-' _.'
+           '-----'
+`
+
 const PROMPT = ">> "
 
 func StartREPL(in io.Reader, out io.Writer) {
 	flag.Parse()
 	scanner := bufio.NewScanner(in)
+	io.WriteString(out, MONKEY_FACE)
 	for {
 		fmt.Printf(PROMPT)
 		if !scanner.Scan() {
