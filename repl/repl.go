@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io"
 
+	"waiig/evaluator"
 	"waiig/lexer"
 	"waiig/parser"
 )
@@ -46,7 +47,10 @@ func StartREPL(in io.Reader, out io.Writer) {
 			}
 			continue
 		}
-		io.WriteString(out, program.String())
-		io.WriteString(out, "\n")
+
+		if evaluated := evaluator.Eval(program); evaluated != nil {
+			io.WriteString(out, evaluated.Inspect())
+			io.WriteString(out, "\n")
+		}
 	}
 }
