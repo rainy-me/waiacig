@@ -8,6 +8,7 @@ import (
 
 	"waiig/evaluator"
 	"waiig/lexer"
+	"waiig/object"
 	"waiig/parser"
 )
 
@@ -30,6 +31,7 @@ const PROMPT = ">> "
 func StartREPL(in io.Reader, out io.Writer) {
 	flag.Parse()
 	scanner := bufio.NewScanner(in)
+	env := object.NewEnvironment()
 	io.WriteString(out, MONKEY_FACE)
 	for {
 		fmt.Printf(PROMPT)
@@ -48,7 +50,7 @@ func StartREPL(in io.Reader, out io.Writer) {
 			continue
 		}
 
-		if evaluated := evaluator.Eval(program); evaluated != nil {
+		if evaluated := evaluator.Eval(program, env); evaluated != nil {
 			io.WriteString(out, evaluated.Inspect())
 			io.WriteString(out, "\n")
 		}
