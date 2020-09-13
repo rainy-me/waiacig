@@ -1,6 +1,7 @@
 package parser
 
 import (
+	"flag"
 	"fmt"
 	"strings"
 )
@@ -13,8 +14,12 @@ func identLevel() string {
 	return strings.Repeat(traceIdentPlaceholder, traceLevel-1)
 }
 
+var traceFlag = flag.Bool("trace", false, "enable tracing")
+
 func tracePrint(fs string) {
-	fmt.Printf("%s%s\n", identLevel(), fs)
+	if *traceFlag {
+		fmt.Printf("%s%s\n", identLevel(), fs)
+	}
 }
 
 func incIdent() { traceLevel = traceLevel + 1 }
