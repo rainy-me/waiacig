@@ -6,10 +6,10 @@ import (
 	"fmt"
 	"io"
 
-	"waiig/evaluator"
-	"waiig/lexer"
-	"waiig/object"
-	"waiig/parser"
+	"waiacig/evaluator"
+	"waiacig/lexer"
+	"waiacig/object"
+	"waiacig/parser"
 )
 
 const MONKEY_FACE = `

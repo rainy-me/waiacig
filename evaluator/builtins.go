@@ -2,7 +2,7 @@ package evaluator
 
 import (
 	"fmt"
-	"waiig/object"
+	"waiacig/object"
 )
 
 var builtins = map[string]*object.Builtin{

@@ -2,9 +2,9 @@ package evaluator
 
 import (
 	"fmt"
-	"waiig/ast"
-	"waiig/object"
-	"waiig/token"
+	"waiacig/ast"
+	"waiacig/object"
+	"waiacig/token"
 )
 
 func quote(node ast.Node, env *object.Environment) object.Object {

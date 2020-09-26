@@ -6,7 +6,7 @@ import (
 	"hash/fnv"
 	"strings"
 
-	"waiig/ast"
+	"waiacig/ast"
 )
 
 const (

@@ -2,8 +2,8 @@ package evaluator
 
 import (
 	"fmt"
-	"waiig/ast"
-	"waiig/object"
+	"waiacig/ast"
+	"waiacig/object"
 )
 
 var (

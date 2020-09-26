@@ -2,10 +2,10 @@ package evaluator
 
 import (
 	"testing"
-	"waiig/ast"
-	"waiig/lexer"
-	"waiig/object"
-	"waiig/parser"
+	"waiacig/ast"
+	"waiacig/lexer"
+	"waiacig/object"
+	"waiacig/parser"
 )
 
 func TestDefineMacros(t *testing.T) {

@@ -5,7 +5,7 @@ import (
 	"os"
 	"os/user"
 
-	"waiig/repl"
+	"waiacig/repl"
 )
 
 func main() {
@@ -13,7 +13,7 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	fmt.Printf("Hello %s! This is the waiig repl\n", u.Username)
+	fmt.Printf("Hello %s! This is the waiacig repl\n", u.Username)
 	fmt.Printf("Feel free to type in commands\n")
 	repl.StartREPL(os.Stdin, os.Stdout)
 }

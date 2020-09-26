@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"strings"
 
-	"waiig/token"
+	"waiacig/token"
 )
 
 type Node interface {

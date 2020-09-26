@@ -1,7 +1,7 @@
 package lexer
 
 import (
-	"waiig/token"
+	"waiacig/token"
 )
 
 type Lexer struct {

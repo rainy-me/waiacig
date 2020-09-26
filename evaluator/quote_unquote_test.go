@@ -2,7 +2,7 @@ package evaluator
 
 import (
 	"testing"
-	"waiig/object"
+	"waiacig/object"
 )
 
 func TestQuote(t *testing.T) {

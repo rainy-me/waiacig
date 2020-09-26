@@ -3,9 +3,9 @@ package evaluator
 import (
 	"testing"
 
-	"waiig/lexer"
-	"waiig/object"
-	"waiig/parser"
+	"waiacig/lexer"
+	"waiacig/object"
+	"waiacig/parser"
 )
 
 func TestEvalIntegerExpression(t *testing.T) {

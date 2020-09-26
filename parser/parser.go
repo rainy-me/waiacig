@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"strconv"
 
-	"waiig/ast"
-	"waiig/lexer"
-	"waiig/token"
+	"waiacig/ast"
+	"waiacig/lexer"
+	"waiacig/token"
 )
 
 const (

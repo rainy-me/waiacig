@@ -1,8 +1,8 @@
 package evaluator
 
 import (
-	"waiig/ast"
-	"waiig/object"
+	"waiacig/ast"
+	"waiacig/object"
 )
 
 func DefineMacros(program *ast.Program, env *object.Environment) {
