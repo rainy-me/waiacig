@@ -97,3 +97,17 @@ func testIntegerObject(expected int64, actual object.Object) error {
 	}
 	return nil
 }
+
+func TestIntegerArithmetic(t *testing.T) {
+	tests := []compilerTestCase{
+		{
+			input:             "1 + 2",
+			expectedConstants: []interface{}{1, 2},
+			expectedInstructions: []code.Instructions{
+				code.MakeInstruction(code.OpConstant, 0),
+				code.MakeInstruction(code.OpConstant, 1),
+				code.MakeInstruction(code.OpAdd),
+			}},
+	}
+	runCompilerTests(t, tests)
+}
