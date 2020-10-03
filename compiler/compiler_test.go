@@ -172,7 +172,9 @@ func TestBooleanExpressions(t *testing.T) {
 			},
 		},
 		{
-			input: "1 > 2", expectedConstants: []interface{}{1, 2}, expectedInstructions: []code.Instructions{
+			input:             "1 > 2",
+			expectedConstants: []interface{}{1, 2},
+			expectedInstructions: []code.Instructions{
 				code.MakeInstruction(code.OpConstant, 0),
 				code.MakeInstruction(code.OpConstant, 1),
 				code.MakeInstruction(code.OpGreaterThan),
@@ -180,7 +182,9 @@ func TestBooleanExpressions(t *testing.T) {
 			},
 		},
 		{
-			input: "1 < 2", expectedConstants: []interface{}{2, 1}, expectedInstructions: []code.Instructions{
+			input:             "1 < 2",
+			expectedConstants: []interface{}{2, 1},
+			expectedInstructions: []code.Instructions{
 				code.MakeInstruction(code.OpConstant, 0),
 				code.MakeInstruction(code.OpConstant, 1),
 				code.MakeInstruction(code.OpGreaterThan),
@@ -188,7 +192,9 @@ func TestBooleanExpressions(t *testing.T) {
 			},
 		},
 		{
-			input: "1 == 2", expectedConstants: []interface{}{1, 2}, expectedInstructions: []code.Instructions{
+			input:             "1 == 2",
+			expectedConstants: []interface{}{1, 2},
+			expectedInstructions: []code.Instructions{
 				code.MakeInstruction(code.OpConstant, 0),
 				code.MakeInstruction(code.OpConstant, 1),
 				code.MakeInstruction(code.OpEqual),
@@ -196,7 +202,9 @@ func TestBooleanExpressions(t *testing.T) {
 			},
 		},
 		{
-			input: "1 != 2", expectedConstants: []interface{}{1, 2}, expectedInstructions: []code.Instructions{
+			input:             "1 != 2",
+			expectedConstants: []interface{}{1, 2},
+			expectedInstructions: []code.Instructions{
 				code.MakeInstruction(code.OpConstant, 0),
 				code.MakeInstruction(code.OpConstant, 1),
 				code.MakeInstruction(code.OpNotEqual),
@@ -204,7 +212,9 @@ func TestBooleanExpressions(t *testing.T) {
 			},
 		},
 		{
-			input: "true == false", expectedConstants: []interface{}{}, expectedInstructions: []code.Instructions{
+			input:             "true == false",
+			expectedConstants: []interface{}{},
+			expectedInstructions: []code.Instructions{
 				code.MakeInstruction(code.OpTrue),
 				code.MakeInstruction(code.OpFalse),
 				code.MakeInstruction(code.OpEqual),
@@ -212,10 +222,30 @@ func TestBooleanExpressions(t *testing.T) {
 			},
 		},
 		{
-			input: "true != false", expectedConstants: []interface{}{}, expectedInstructions: []code.Instructions{
+			input:             "true != false",
+			expectedConstants: []interface{}{},
+			expectedInstructions: []code.Instructions{
 				code.MakeInstruction(code.OpTrue),
 				code.MakeInstruction(code.OpFalse),
 				code.MakeInstruction(code.OpNotEqual),
+				code.MakeInstruction(code.OpPop),
+			},
+		},
+		{
+			input:             "-1",
+			expectedConstants: []interface{}{1},
+			expectedInstructions: []code.Instructions{
+				code.MakeInstruction(code.OpConstant, 0),
+				code.MakeInstruction(code.OpMinus),
+				code.MakeInstruction(code.OpPop),
+			},
+		},
+		{
+			input:             "!true",
+			expectedConstants: []interface{}{},
+			expectedInstructions: []code.Instructions{
+				code.MakeInstruction(code.OpTrue),
+				code.MakeInstruction(code.OpBang),
 				code.MakeInstruction(code.OpPop),
 			},
 		},
