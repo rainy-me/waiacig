@@ -68,8 +68,8 @@ func StartREPL(in io.Reader, out io.Writer) {
 				fmt.Fprintf(out, "Woops! Executing bytecode failed:\n %s\n", err)
 				continue
 			}
-			stackTop := machine.StackTop()
-			io.WriteString(out, stackTop.Inspect())
+			lastPopped := machine.LastPoppedStackElem()
+			io.WriteString(out, lastPopped.Inspect())
 			io.WriteString(out, "\n")
 		}
 

@@ -107,7 +107,50 @@ func TestIntegerArithmetic(t *testing.T) {
 				code.MakeInstruction(code.OpConstant, 0),
 				code.MakeInstruction(code.OpConstant, 1),
 				code.MakeInstruction(code.OpAdd),
-			}},
+				code.MakeInstruction(code.OpPop),
+			},
+		},
+		{
+			input:             "1; 2",
+			expectedConstants: []interface{}{1, 2},
+			expectedInstructions: []code.Instructions{
+				code.MakeInstruction(code.OpConstant, 0),
+				code.MakeInstruction(code.OpPop),
+				code.MakeInstruction(code.OpConstant, 1),
+				code.MakeInstruction(code.OpPop),
+			},
+		},
+		{
+			input:             "1 - 2",
+			expectedConstants: []interface{}{1, 2},
+			expectedInstructions: []code.Instructions{
+				code.MakeInstruction(code.OpConstant, 0),
+				code.MakeInstruction(code.OpConstant, 1),
+				code.MakeInstruction(code.OpSub),
+				code.MakeInstruction(code.OpPop),
+			},
+		},
+		{
+			input:             "1 * 2",
+			expectedConstants: []interface{}{1, 2},
+			expectedInstructions: []code.Instructions{
+				code.MakeInstruction(code.OpConstant, 0),
+				code.MakeInstruction(code.OpConstant, 1),
+				code.MakeInstruction(code.OpMul),
+				code.MakeInstruction(code.OpPop),
+			},
+		},
+		{
+			input:             "2 / 1",
+			expectedConstants: []interface{}{2, 1},
+			expectedInstructions: []code.Instructions{
+				code.MakeInstruction(code.OpConstant, 0),
+				code.MakeInstruction(code.OpConstant, 1),
+				code.MakeInstruction(code.OpDiv),
+				code.MakeInstruction(code.OpPop),
+			},
+		},
 	}
+
 	runCompilerTests(t, tests)
 }
