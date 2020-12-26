@@ -7,21 +7,23 @@ import (
 	"strings"
 
 	"waiacig/ast"
+	"waiacig/code"
 )
 
 const (
-	INTEGER_OBJ      = "INTEGER"
-	BOOLEAN_OBJ      = "BOOLEAN"
-	STRING_OBJ       = "STRING"
-	ARRAY_OBJ        = "ARRAY"
-	HASH_OBJ         = "HASH"
-	NULL_OBJ         = "NULL"
-	FUNCTION_OBJ     = "FUNCTION"
-	BUILTIN_OBJ      = "BUILTIN"
-	RETURN_VALUE_OBJ = "RETURN_VALUE"
-	QUOTE_OBJ        = "QUOTE"
-	ERROR_OBJ        = "ERROR"
-	MACRO_OBJ        = "MACRO"
+	INTEGER_OBJ           = "INTEGER"
+	BOOLEAN_OBJ           = "BOOLEAN"
+	STRING_OBJ            = "STRING"
+	ARRAY_OBJ             = "ARRAY"
+	HASH_OBJ              = "HASH"
+	NULL_OBJ              = "NULL"
+	FUNCTION_OBJ          = "FUNCTION"
+	BUILTIN_OBJ           = "BUILTIN"
+	RETURN_VALUE_OBJ      = "RETURN_VALUE"
+	QUOTE_OBJ             = "QUOTE"
+	ERROR_OBJ             = "ERROR"
+	MACRO_OBJ             = "MACRO"
+	COMPILED_FUNCTION_OBJ = "COMPILED_FUNCTION_OBJ"
 )
 
 type ObjectType string
@@ -201,4 +203,13 @@ func (m *Macro) Inspect() string {
 	out.WriteString("\n}")
 
 	return out.String()
+}
+
+type CompiledFunction struct {
+	Instructions code.Instructions
+}
+
+func (cf *CompiledFunction) Type() ObjectType { return COMPILED_FUNCTION_OBJ }
+func (cf *CompiledFunction) Inspect() string {
+	return fmt.Sprintf("CompiledFunction[%p]", cf)
 }
