@@ -596,3 +596,62 @@ func TestCompilerScopes(t *testing.T) {
 			previous.Opcode, code.OpMul)
 	}
 }
+
+func TestFunctionsWithoutReturnValue(t *testing.T) {
+	tests := []compilerTestCase{
+		{
+			input: `fn() { }`,
+			expectedConstants: []interface{}{
+				[]code.Instructions{
+					code.MakeInstruction(code.OpReturn),
+				},
+			},
+			expectedInstructions: []code.Instructions{
+				code.MakeInstruction(code.OpConstant, 0),
+				code.MakeInstruction(code.OpPop),
+			},
+		},
+	}
+	runCompilerTests(t, tests)
+}
+
+func TestFunctionCalls(t *testing.T) {
+	tests := []compilerTestCase{
+		{
+			input: `fn() { 24 }();`,
+			expectedConstants: []interface{}{
+				24,
+				[]code.Instructions{
+					code.MakeInstruction(code.OpConstant, 0), // The literal "24"
+					code.MakeInstruction(code.OpReturnValue),
+				},
+			},
+			expectedInstructions: []code.Instructions{
+				code.MakeInstruction(code.OpConstant, 1), // The compiled function
+				code.MakeInstruction(code.OpCall),
+				code.MakeInstruction(code.OpPop),
+			},
+		},
+		{
+			input: `
+	let noArg = fn() { 24 };
+	noArg();
+	`,
+			expectedConstants: []interface{}{
+				24,
+				[]code.Instructions{
+					code.MakeInstruction(code.OpConstant, 0), // The literal "24"
+					code.MakeInstruction(code.OpReturnValue),
+				},
+			},
+			expectedInstructions: []code.Instructions{
+				code.MakeInstruction(code.OpConstant, 1), // The compiled function
+				code.MakeInstruction(code.OpSetGlobal, 0),
+				code.MakeInstruction(code.OpGetGlobal, 0),
+				code.MakeInstruction(code.OpCall),
+				code.MakeInstruction(code.OpPop),
+			},
+		},
+	}
+	runCompilerTests(t, tests)
+}
