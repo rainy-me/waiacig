@@ -397,3 +397,45 @@ func TestStringExpressions(t *testing.T) {
 	}
 	runCompilerTests(t, tests)
 }
+
+func TestArrayLiterals(t *testing.T) {
+	tests := []compilerTestCase{
+		{
+			input:             "[]",
+			expectedConstants: []interface{}{},
+			expectedInstructions: []code.Instructions{
+				code.MakeInstruction(code.OpArray, 0),
+				code.MakeInstruction(code.OpPop),
+			},
+		},
+		{
+			input:             "[1, 2, 3]",
+			expectedConstants: []interface{}{1, 2, 3},
+			expectedInstructions: []code.Instructions{
+				code.MakeInstruction(code.OpConstant, 0),
+				code.MakeInstruction(code.OpConstant, 1),
+				code.MakeInstruction(code.OpConstant, 2),
+				code.MakeInstruction(code.OpArray, 3),
+				code.MakeInstruction(code.OpPop),
+			},
+		},
+		{
+			input:             "[1 + 2, 3 - 4, 5 * 6]",
+			expectedConstants: []interface{}{1, 2, 3, 4, 5, 6},
+			expectedInstructions: []code.Instructions{
+				code.MakeInstruction(code.OpConstant, 0),
+				code.MakeInstruction(code.OpConstant, 1),
+				code.MakeInstruction(code.OpAdd),
+				code.MakeInstruction(code.OpConstant, 2),
+				code.MakeInstruction(code.OpConstant, 3),
+				code.MakeInstruction(code.OpSub),
+				code.MakeInstruction(code.OpConstant, 4),
+				code.MakeInstruction(code.OpConstant, 5),
+				code.MakeInstruction(code.OpMul),
+				code.MakeInstruction(code.OpArray, 3),
+				code.MakeInstruction(code.OpPop),
+			},
+		},
+	}
+	runCompilerTests(t, tests)
+}
