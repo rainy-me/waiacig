@@ -828,3 +828,41 @@ func TestCompilerScopes(t *testing.T) {
 			previous.Opcode, code.OpMul)
 	}
 }
+
+func TestBuiltins(t *testing.T) {
+	tests := []compilerTestCase{
+		{
+			input: `
+	len([]);
+	push([], 1);
+	`,
+			expectedConstants: []interface{}{1},
+			expectedInstructions: []code.Instructions{
+				code.MakeInstruction(code.OpGetBuiltin, 0),
+				code.MakeInstruction(code.OpArray, 0),
+				code.MakeInstruction(code.OpCall, 1),
+				code.MakeInstruction(code.OpPop),
+				code.MakeInstruction(code.OpGetBuiltin, 5),
+				code.MakeInstruction(code.OpArray, 0),
+				code.MakeInstruction(code.OpConstant, 0),
+				code.MakeInstruction(code.OpCall, 2),
+				code.MakeInstruction(code.OpPop),
+			},
+		},
+		{input: `fn() { len([]) }`,
+			expectedConstants: []interface{}{
+				[]code.Instructions{
+					code.MakeInstruction(code.OpGetBuiltin, 0),
+					code.MakeInstruction(code.OpArray, 0),
+					code.MakeInstruction(code.OpCall, 1),
+					code.MakeInstruction(code.OpReturnValue),
+				},
+			},
+			expectedInstructions: []code.Instructions{
+				code.MakeInstruction(code.OpConstant, 0),
+				code.MakeInstruction(code.OpPop),
+			},
+		},
+	}
+	runCompilerTests(t, tests)
+}
