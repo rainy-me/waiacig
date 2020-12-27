@@ -586,7 +586,7 @@ func TestFunctionCalls(t *testing.T) {
 			},
 			expectedInstructions: []code.Instructions{
 				code.MakeInstruction(code.OpConstant, 1), // The compiled function
-				code.MakeInstruction(code.OpCall),
+				code.MakeInstruction(code.OpCall, 0),
 				code.MakeInstruction(code.OpPop),
 			},
 		},
@@ -606,7 +606,97 @@ func TestFunctionCalls(t *testing.T) {
 				code.MakeInstruction(code.OpConstant, 1), // The compiled function
 				code.MakeInstruction(code.OpSetGlobal, 0),
 				code.MakeInstruction(code.OpGetGlobal, 0),
-				code.MakeInstruction(code.OpCall),
+				code.MakeInstruction(code.OpCall, 0),
+				code.MakeInstruction(code.OpPop),
+			},
+		},
+		{
+			input: `
+			let oneArg = fn(a) { };
+			oneArg(24);
+			`,
+			expectedConstants: []interface{}{[]code.Instructions{
+				code.MakeInstruction(code.OpReturn)},
+				24,
+			},
+			expectedInstructions: []code.Instructions{
+				code.MakeInstruction(code.OpConstant, 0),
+				code.MakeInstruction(code.OpSetGlobal, 0),
+				code.MakeInstruction(code.OpGetGlobal, 0),
+				code.MakeInstruction(code.OpConstant, 1),
+				code.MakeInstruction(code.OpCall, 1),
+				code.MakeInstruction(code.OpPop),
+			},
+		},
+		{input: `
+		let manyArg = fn(a, b, c) { };
+		manyArg(24, 25, 26);
+		`,
+			expectedConstants: []interface{}{
+				[]code.Instructions{
+					code.MakeInstruction(code.OpReturn)},
+				24,
+				25,
+				26,
+			},
+			expectedInstructions: []code.Instructions{
+				code.MakeInstruction(code.OpConstant, 0),
+				code.MakeInstruction(code.OpSetGlobal, 0),
+				code.MakeInstruction(code.OpGetGlobal, 0),
+				code.MakeInstruction(code.OpConstant, 1),
+				code.MakeInstruction(code.OpConstant, 2),
+				code.MakeInstruction(code.OpConstant, 3),
+				code.MakeInstruction(code.OpCall, 3),
+				code.MakeInstruction(code.OpPop),
+			},
+		},
+		{
+			input: `
+			let oneArg = fn(a) { a };
+			oneArg(24);
+`,
+			expectedConstants: []interface{}{
+				[]code.Instructions{
+					code.MakeInstruction(code.OpGetLocal, 0),
+					code.MakeInstruction(code.OpReturnValue),
+				},
+				24,
+			},
+			expectedInstructions: []code.Instructions{
+				code.MakeInstruction(code.OpConstant, 0),
+				code.MakeInstruction(code.OpSetGlobal, 0),
+				code.MakeInstruction(code.OpGetGlobal, 0),
+				code.MakeInstruction(code.OpConstant, 1),
+				code.MakeInstruction(code.OpCall, 1),
+				code.MakeInstruction(code.OpPop),
+			},
+		},
+		{
+			input: `
+				let manyArg = fn(a, b, c) { a; b; c };
+				manyArg(24, 25, 26);
+			`,
+			expectedConstants: []interface{}{
+				[]code.Instructions{
+					code.MakeInstruction(code.OpGetLocal, 0),
+					code.MakeInstruction(code.OpPop),
+					code.MakeInstruction(code.OpGetLocal, 1),
+					code.MakeInstruction(code.OpPop),
+					code.MakeInstruction(code.OpGetLocal, 2),
+					code.MakeInstruction(code.OpReturnValue),
+				},
+				24,
+				25,
+				26,
+			},
+			expectedInstructions: []code.Instructions{
+				code.MakeInstruction(code.OpConstant, 0),
+				code.MakeInstruction(code.OpSetGlobal, 0),
+				code.MakeInstruction(code.OpGetGlobal, 0),
+				code.MakeInstruction(code.OpConstant, 1),
+				code.MakeInstruction(code.OpConstant, 2),
+				code.MakeInstruction(code.OpConstant, 3),
+				code.MakeInstruction(code.OpCall, 3),
 				code.MakeInstruction(code.OpPop),
 			},
 		},
